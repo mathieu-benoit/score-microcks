@@ -1,0 +1,4 @@
+.score-compose/
+.score-k8s/
+compose.yaml
+manifests.yaml
