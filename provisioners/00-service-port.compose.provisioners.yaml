@@ -1,0 +1,32 @@
+- uri: template://custom-provisioners/service-port
+  type: service-port
+  description: Outputs a hostname and port for connecting to another workload
+  init: |
+    hostname: {{ .Params.workload }}
+    port: {{ .Params.port }}
+  outputs: |
+    hostname: localhost
+    port: {{ .Init.port }}
+  expected_outputs:
+    - hostname
+    - port
+  supported_params:
+    - workload
+    - port
+  services: |
+    {{ .Init.hostname }}:
+      image: quay.io/microcks/microcks-cli:latest
+      restart: always
+      entrypoint:
+        - "microcks-cli"
+        - "import"
+        - "/resources/{{ .Params.workload }}-openapi.yaml:true"
+        - "--microcksURL=http://microcks:8080/api"
+        - "--insecure"
+        - "--keycloakClientId=foo"
+        - "--keycloakClientSecret=bar"
+      volumes:
+      - type: bind
+        source: ./resources
+        target: /resources
+        read_only: true
