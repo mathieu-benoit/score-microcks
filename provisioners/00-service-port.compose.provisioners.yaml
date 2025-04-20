@@ -1,11 +1,16 @@
-- uri: template://custom-provisioners/service-port
+- uri: template://custom-provisioners/service-port-with-microcks
   type: service-port
   description: Outputs a hostname and port for connecting to another workload
   init: |
     hostname: {{ .Params.workload }}
     port: {{ .Params.port }}
   outputs: |
+    {{ $w := (index .WorkloadServices .Params.workload) }}
+    {{ if or (not $w) (not $w.ServiceName) }}
     hostname: localhost
+    {{ else }}
+    hostname: {{ .Init.hostname }}
+    {{ end }}
     port: {{ .Init.port }}
   expected_outputs:
     - hostname
@@ -14,7 +19,9 @@
     - workload
     - port
   services: |
-    {{ .Init.hostname }}:
+    {{ $w := (index .WorkloadServices .Params.workload) }}
+    {{ if or (not $w) (not $w.ServiceName) }}
+    {{ .Init.hostname }}-mock:
       image: quay.io/microcks/microcks-cli:latest
       restart: always
       entrypoint:
@@ -30,3 +37,4 @@
         source: ./resources
         target: /resources
         read_only: true
+    {{ end }}

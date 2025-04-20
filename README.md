@@ -10,6 +10,19 @@ score-compose generate score.yaml
 docker compose up --build -d --remove-orphans
 ```
 
+Navigate to the Microcks UI:
+```bash
+echo -e "http://localhost:9090"
+```
+
+Test the endpoint registered:
+```bash
+curl -X POST 'http://localhost:9090/rest/Order+Service+API/0.1.0/orders' \
+    -H 'Content-Type: application/json' \
+    -H 'Accept: application/json' \
+    -d '{"customerId":"lbroudoux","productQuantities":[{"productName":"Millefeuille","quantity":1},{"productName":"Eclair Cafe","quantity":2}],"totalPrice":9.4}'
+```
+
 ```bash
 score-k8s init \
     --provisioners provisioners/00-service-port.k8s.provisioners.yaml
