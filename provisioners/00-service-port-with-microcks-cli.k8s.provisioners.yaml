@@ -1,0 +1,24 @@
+- uri: cmd://bash#service-port-with-microcks-cli
+  type: service-port
+  description: Outputs a hostname and port for connecting to another workload, generates a Microcks mock if not found.
+  expected_outputs:
+    - hostname
+    - port
+  supported_params:
+    - workload
+    - port
+  args:
+  - -c
+  - |
+    STDIN=$(cat)
+    PARAM_WORKLOAD=$(echo $STDIN | yq eval -p json '.resource_params.workload')
+    PARAM_PORT=$(echo $STDIN | yq eval -p json '.resource_params.port')
+    WORKLOAD_EXISTS=$(echo $STDIN | PARAM_WORKLOAD=${PARAM_WORKLOAD} yq eval -p json '.workload_services | has(strenv(PARAM_WORKLOAD))')
+    OUTPUT_HOSTNAME=${PARAM_WORKLOAD}
+    OUTPUT_PORT=${PARAM_PORT}
+    if [ "$WORKLOAD_EXISTS" != "true" ]; then
+      OUTPUT_HOSTNAME="localhost"
+      microcks-cli import /resources/${PARAM_WORKLOAD}-openapi.yaml:true --microcksURL=http://microcks:8080/api --insecure --keycloakClientId=foo --keycloakClientSecret=bar >&2
+    fi
+    OUTPUTS='{"resource_outputs":{"hostname":"%s", "port":"%s"},"manifests":[]}'
+    printf "$OUTPUTS" "$OUTPUT_HOSTNAME" "$OUTPUT_PORT"

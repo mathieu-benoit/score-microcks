@@ -1,0 +1,13 @@
+apiVersion: score.dev/v1b1
+metadata:
+  name: backend
+containers:
+  hello-world:
+    image: busybox
+    command: ["/bin/sh"]
+    args: ["-c", "while true; do echo Hello $SERVICE_DEP!; sleep 5; done"]
+service:
+  ports:
+    www:
+      port: 8080
+      targetPort: 80

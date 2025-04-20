@@ -1,6 +1,6 @@
 - uri: template://custom-provisioners/service-port-with-microcks
   type: service-port
-  description: Outputs a hostname and port for connecting to another workload
+  description: Outputs a hostname and port for connecting to another workload, generates a Microcks mock if not found.
   init: |
     hostname: {{ .Params.workload }}
     port: {{ .Params.port }}
