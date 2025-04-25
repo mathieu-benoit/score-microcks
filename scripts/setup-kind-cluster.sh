@@ -34,5 +34,4 @@ helm upgrade microcks microcks/microcks \
     --namespace microcks \
     --create-namespace \
     --set microcks.url=microcks.127.0.0.1.nip.io \
-    --set keycloak.url=keycloak.127.0.0.1.nip.io \
-    --set keycloak.privateUrl=http://microcks-keycloak.microcks.svc.cluster.local:8080
+    --set keycloak.enabled=false
