@@ -2,7 +2,7 @@ apiVersion: score.dev/v1b1
 metadata:
   name: backend
 containers:
-  hello-world:
+  backend:
     image: busybox
     command: ["/bin/sh"]
     args: ["-c", "while true; do echo Hello $SERVICE_DEP!; sleep 5; done"]

@@ -1,20 +1,20 @@
 apiVersion: score.dev/v1b1
 metadata:
-  name: example
+  name: frontend
 containers:
-  hello-world:
+  frontend:
     image: busybox
     command: ["/bin/sh"]
     args: ["-c", "while true; do echo Hello $SERVICE_DEP!; sleep 5; done"]
     variables:
-      SERVICE_DEP: http://${resources.dep.hostname}:${resources.dep.port}
+      SERVICE_DEP: http://${resources.backend.hostname}:${resources.backend.port}
 service:
   ports:
     www:
       port: 8080
       targetPort: 80
 resources:
-  dep:
+  backend:
     type: service-port
     params:
       workload: backend

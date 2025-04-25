@@ -2,17 +2,14 @@
 
 TODO:
 - Test cli in k8s
-- Add manifests provisioners with k8s
+- Add manifests provisioners with k8s (operator/gitops)
 
 ```bash
 score-compose init \
     --patch-templates provisioners/microcks.tpl \
     --provisioners provisioners/00-service-port-with-microcks.compose.provisioners.yaml
 
-score-compose generate score.yaml score-backend.yaml
-
-score-compose generate score.yaml
-score-compose generate score-backend.yaml
+score-compose generate score-frontend.yaml
 
 docker compose up --build -d --remove-orphans
 ```
@@ -34,7 +31,7 @@ curl -X POST 'http://localhost:9090/rest/Order+Service+API/0.1.0/orders' \
 score-k8s init \
     --provisioners provisioners/00-service-port-with-microcks-cli.k8s.provisioners.yaml
 
-score-k8s generate score.yaml
+score-k8s generate score-frontend.yaml
 
 kubectl apply -f manifests.yaml
 ```
@@ -48,3 +45,4 @@ Resources:
 TODO for Kubernetes, let's do with Operator, more compatible with GitOps:
 - https://github.com/microcks/api-lifecycle/blob/master/gitops-demo/overlays/minikube.local/microcks-apisource.yaml?
 - https://microcks.io/documentation/guides/installation/kubernetes-operator/
+- https://hub.microcks.io/
