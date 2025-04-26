@@ -31,9 +31,17 @@
         - "--insecure"
         - "--keycloakClientId=foo"
         - "--keycloakClientSecret=bar"
+      cap_drop:
+        - ALL
+      read_only: true
+      user: "65532"
       volumes:
       - type: bind
         source: ./resources
         target: /resources
         read_only: true
+      depends_on:
+        microcks:
+          condition: service_started
+          required: true
     {{ end }}
