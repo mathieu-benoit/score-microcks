@@ -1,25 +1,24 @@
-- uri: template://custom-provisioners/service-port-with-microcks
-  type: service-port
-  description: Outputs a hostname and port for connecting to another workload, generates a Microcks mock if not found.
+- uri: template://custom-provisioners/endpoint-with-microcks
+  type: endpoint
+  description: Outputs an endpoint URL for connecting to an other workload (a Microcks mock is generated if not found).
   init: |
-    hostname: {{ .Params.workload }}
+    hostname: {{ splitList "." .Id | last }}
+    # TODO: make it optional, retrieve from list if not provided.
     port: {{ .Params.port }}
-  outputs: |
-    {{ $w := (index .WorkloadServices .Params.workload) }}
-    {{ if or (not $w) (not $w.ServiceName) }}
-    hostname: localhost
-    {{ else }}
-    hostname: {{ .Init.hostname }}
-    {{ end }}
-    port: {{ .Init.port }}
-  expected_outputs:
-    - hostname
-    - port
   supported_params:
-    - workload
     - port
+  outputs: |
+    {{ $w := (index .WorkloadServices .Init.hostname) }}
+    {{ if or (not $w) (not $w.ServiceName) }}
+    # FIXME: make it more generic for the last part of this URL.
+    url: http://localhost:9090/rest/Order+Service+API
+    {{ else }}
+    url: http://{{ .Init.hostname }}:{{ .Init.port }}
+    {{ end }}
+  expected_outputs:
+    - url
   services: |
-    {{ $w := (index .WorkloadServices .Params.workload) }}
+    {{ $w := (index .WorkloadServices .Init.hostname) }}
     {{ if or (not $w) (not $w.ServiceName) }}
     {{ .Init.hostname }}-mock:
       image: quay.io/microcks/microcks-cli:latest
@@ -27,7 +26,7 @@
       entrypoint:
         - "microcks-cli"
         - "import"
-        - "/resources/{{ .Params.workload }}-openapi.yaml:true"
+        - "/resources/{{ .Init.hostname }}-openapi.yaml:true"
         - "--microcksURL=http://microcks:8080/api"
         - "--insecure"
         - "--keycloakClientId=foo"

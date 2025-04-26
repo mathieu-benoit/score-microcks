@@ -7,15 +7,14 @@ containers:
     command: ["/bin/sh"]
     args: ["-c", "while true; do echo Hello $SERVICE_DEP!; sleep 5; done"]
     variables:
-      SERVICE_DEP: http://${resources.backend.hostname}:${resources.backend.port}
+      SERVICE_DEP: ${resources.backend.url}/0.1.0/orders
 service:
   ports:
-    www:
+    tcp:
       port: 8080
       targetPort: 80
 resources:
   backend:
-    type: service-port
+    type: endpoint
     params:
-      workload: backend
-      port: "8181"
+      port: 8181

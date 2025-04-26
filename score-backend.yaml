@@ -5,9 +5,9 @@ containers:
   backend:
     image: busybox
     command: ["/bin/sh"]
-    args: ["-c", "while true; do echo Hello $SERVICE_DEP!; sleep 5; done"]
+    args: ["-c", "while true; do echo Hello, I'm the Backend!; sleep 5; done"]
 service:
   ports:
-    www:
-      port: 8080
+    tcp:
+      port: 8181
       targetPort: 80
