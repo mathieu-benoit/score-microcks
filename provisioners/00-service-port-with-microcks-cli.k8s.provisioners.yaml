@@ -18,7 +18,7 @@
     OUTPUT_PORT=${PARAM_PORT}
     if [ "$WORKLOAD_EXISTS" != "true" ]; then
       OUTPUT_HOSTNAME="localhost"
-      microcks-cli import /resources/${PARAM_WORKLOAD}-openapi.yaml:true --microcksURL=http://microcks:8080/api --insecure --keycloakClientId=foo --keycloakClientSecret=bar >&2
+      microcks-cli import /resources/${PARAM_WORKLOAD}-openapi.yaml:true --microcksURL=https://microcks.127.0.0.1.nip.io/api --insecure --keycloakClientId=foo --keycloakClientSecret=bar >&2
     fi
     OUTPUTS='{"resource_outputs":{"hostname":"%s", "port":"%s"},"manifests":[]}'
     printf "$OUTPUTS" "$OUTPUT_HOSTNAME" "$OUTPUT_PORT"
