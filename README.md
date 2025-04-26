@@ -12,14 +12,7 @@ TODO:
 - Add manifests provisioners with k8s (operator/gitops)
 
 ```bash
-score-compose init \
-    --no-sample \
-    --patch-templates provisioners/microcks.tpl \
-    --provisioners provisioners/00-service-port-with-microcks.compose.provisioners.yaml
-
-score-compose generate score-frontend.yaml
-
-docker compose up --build -d --remove-orphans
+make compose-up
 ```
 
 Navigate to the Microcks UI:
@@ -36,13 +29,7 @@ curl -X POST 'http://localhost:9090/rest/Order+Service+API/0.1.0/orders' \
 ```
 
 ```bash
-score-k8s init \
-    --no-sample \
-    --provisioners provisioners/00-service-port-with-microcks-cli.k8s.provisioners.yaml
-
-score-k8s generate score-frontend.yaml
-
-kubectl apply -f manifests.yaml
+make k8s-up
 ```
 
 Resources:
