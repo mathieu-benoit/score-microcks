@@ -1,5 +1,12 @@
 # score-microcks
 
+```mermaid
+flowchart LR
+  direction LR
+  frontend-->backend
+  frontend-.->backend-mock
+```
+
 TODO:
 - Test cli in k8s
 - Add manifests provisioners with k8s (operator/gitops)
@@ -42,9 +49,8 @@ Resources:
 - https://microcks.io/documentation/guides/installation/docker-compose/
 - https://microcks.io/documentation/guides/installation/kubernetes-operator/
 - https://github.com/microcks/api-lifecycle/tree/master/shift-left-demo
-
+- https://hub.microcks.io/
 
 TODO for Kubernetes, let's do with Operator, more compatible with GitOps:
 - https://github.com/microcks/api-lifecycle/blob/master/gitops-demo/overlays/minikube.local/microcks-apisource.yaml?
 - https://microcks.io/documentation/guides/installation/kubernetes-operator/
-- https://hub.microcks.io/
