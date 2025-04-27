@@ -1,5 +1,7 @@
 # score-microcks
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/mathieu-benoit/score-microcks)
+
 ```mermaid
 flowchart LR
   direction LR
@@ -26,6 +28,16 @@ curl -X POST 'http://localhost:9090/rest/Order+Service+API/0.1.0/orders' \
     -H 'Content-Type: application/json' \
     -H 'Accept: application/json' \
     -d '{"customerId":"lbroudoux","productQuantities":[{"productName":"Millefeuille","quantity":1},{"productName":"Eclair Cafe","quantity":2}],"totalPrice":9.4}'
+```
+
+Create a Kind cluster if you need one:
+```bash
+make kind-create-cluster
+```
+
+Navigate to the Microcks UI:
+```bash
+echo -e "https://microcks.127.0.0.1.nip.io"
 ```
 
 ```bash
