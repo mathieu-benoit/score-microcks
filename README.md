@@ -12,6 +12,10 @@ flowchart LR
 TODO:
 - Test cli in k8s
 - Add manifests provisioners with k8s (operator/gitops)
+  - https://github.com/microcks/api-lifecycle/blob/master/gitops-demo/overlays/minikube.local/microcks-apisource.yaml?
+  - https://microcks.io/documentation/guides/installation/kubernetes-operator/
+
+## `score-compose`
 
 ```bash
 make compose-up
@@ -30,6 +34,8 @@ curl -X POST 'http://localhost:9090/rest/Order+Service+API/0.1.0/orders' \
     -d '{"customerId":"lbroudoux","productQuantities":[{"productName":"Millefeuille","quantity":1},{"productName":"Eclair Cafe","quantity":2}],"totalPrice":9.4}'
 ```
 
+## `score-k8s`
+
 Create a Kind cluster if you need one:
 ```bash
 make kind-create-cluster
@@ -44,12 +50,9 @@ echo -e "https://microcks.127.0.0.1.nip.io"
 make k8s-up
 ```
 
-Resources:
+## Resources
+
 - https://microcks.io/documentation/guides/installation/docker-compose/
 - https://microcks.io/documentation/guides/installation/kubernetes-operator/
 - https://github.com/microcks/api-lifecycle/tree/master/shift-left-demo
 - https://hub.microcks.io/
-
-TODO for Kubernetes, let's do with Operator, more compatible with GitOps:
-- https://github.com/microcks/api-lifecycle/blob/master/gitops-demo/overlays/minikube.local/microcks-apisource.yaml?
-- https://microcks.io/documentation/guides/installation/kubernetes-operator/

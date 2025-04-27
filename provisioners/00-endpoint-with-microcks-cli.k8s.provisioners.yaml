@@ -18,6 +18,7 @@
       HOSTNAME="microcks.127.0.0.1.nip.io"
       SCHEME="https"
       PATH="/rest/Order+Service+API"
+      set -eu -o pipefail
       microcks-cli import /resources/${PARAM_WORKLOAD}-openapi.yaml:true --microcksURL=https://${HOSTNAME}/api --insecure --keycloakClientId=foo --keycloakClientSecret=bar >&2
     fi
     OUTPUTS='{"resource_outputs":{"url":"%s://%s:%s%s"},"manifests":[]}'
