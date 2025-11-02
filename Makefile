@@ -14,7 +14,7 @@ help:
 .score-compose/state.yaml:
 	score-compose init \
     	--no-sample \
-    	--patch-templates provisioners/microcks.tpl \
+    	--patch-templates https://raw.githubusercontent.com/score-spec/community-patchers/refs/heads/main/score-compose/microcks.tpl \
     	--provisioners provisioners/00-endpoint-with-microcks.compose.provisioners.yaml
 
 compose.yaml: score-frontend.yaml score-backend.yaml .score-compose/state.yaml Makefile
@@ -24,7 +24,7 @@ compose.yaml: score-frontend.yaml score-backend.yaml .score-compose/state.yaml M
 ## Generate a compose.yaml file from the score spec and launch it.
 .PHONY: compose-up
 compose-up: compose.yaml
-	docker compose up --build -d --remove-orphans
+	docker compose up -d --wait --remove-orphans
 
 ## Delete the containers running via compose down.
 .PHONY: compose-down
