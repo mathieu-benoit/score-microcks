@@ -23,11 +23,12 @@ sudo mv ./kind /usr/local/bin/kind
 sudo wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq
 sudo chmod +x /usr/bin/yq
 
-MICROCKS_VERSION=$(curl -sL https://api.github.com/repos/microcks/microcks-cli/releases/latest | jq -r .tag_name)
+#MICROCKS_VERSION=$(curl -sL https://api.github.com/repos/microcks/microcks-cli/releases/latest | jq -r .tag_name)
+MICROCKS_VERSION=0.5.8
 wget https://github.com/microcks/microcks-cli/releases/download/${MICROCKS_VERSION}/microcks-cli_${MICROCKS_VERSION}_linux_amd64.tar.gz
 tar -xvf microcks-cli_${MICROCKS_VERSION}_linux_amd64.tar.gz
-chmod +x ./microcks
-sudo mv ./microcks /usr/local/bin/microcks
+chmod +x ./microcks-cli
+sudo mv ./microcks-cli /usr/local/bin/microcks
 
 cd ..
 rm -rf install-more-tools
