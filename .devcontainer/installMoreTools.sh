@@ -26,8 +26,8 @@ sudo chmod +x /usr/bin/yq
 MICROCKS_VERSION=$(curl -sL https://api.github.com/repos/microcks/microcks-cli/releases/latest | jq -r .tag_name)
 wget https://github.com/microcks/microcks-cli/releases/download/${MICROCKS_VERSION}/microcks-cli_${MICROCKS_VERSION}_linux_amd64.tar.gz
 tar -xvf microcks-cli_${MICROCKS_VERSION}_linux_amd64.tar.gz
-chmod +x ./microcks-cli
-sudo mv ./microcks-cli /usr/local/bin/microcks-cli
+chmod +x ./microcks
+sudo mv ./microcks /usr/local/bin/microcks
 
 cd ..
 rm -rf install-more-tools
