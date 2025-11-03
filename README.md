@@ -16,7 +16,7 @@ flowchart LR
 ```mermaid
 sequenceDiagram
     Command->>+Files: score-compose init
-    Files-->>+Files: microcks-patcher.yaml
+    Files-->>+Files: microcks-patcher.tpl
     Files-->>+Files: endpoint-provisioner.yaml
     Command->>+Files: score-compose generate
     Files-->>+Files: compose.yaml
