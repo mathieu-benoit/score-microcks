@@ -15,7 +15,7 @@ help:
 	score-compose init \
     	--no-sample \
     	--patch-templates https://raw.githubusercontent.com/score-spec/community-patchers/refs/heads/main/score-compose/microcks.tpl \
-    	--provisioners provisioners/00-endpoint-with-microcks.compose.provisioners.yaml
+    	--provisioners https://raw.githubusercontent.com/score-spec/community-provisioners/refs/heads/main/endpoint/score-compose/10-endpoint-with-microcks.provisioners.yaml
 
 compose.yaml: score-frontend.yaml score-backend.yaml .score-compose/state.yaml Makefile
 	score-compose generate score-frontend.yaml
@@ -34,7 +34,7 @@ compose-down:
 .score-k8s/state.yaml:
 	score-k8s init \
     	--no-sample \
-    	--provisioners provisioners/00-endpoint-with-microcks-cli.k8s.provisioners.yaml
+    	--provisioners https://raw.githubusercontent.com/score-spec/community-provisioners/refs/heads/main/endpoint/score-k8s/10-endpoint-with-microcks-cli.provisioners.yaml
 
 manifests.yaml: score-frontend.yaml score-backend.yaml .score-k8s/state.yaml Makefile
 	score-k8s generate score-frontend.yaml
