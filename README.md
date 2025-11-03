@@ -9,13 +9,17 @@ flowchart LR
   frontend-.->backend-mock
 ```
 
-TODO:
-- Test cli in k8s
-- Add manifests provisioners with k8s (operator/gitops)
-  - https://github.com/microcks/api-lifecycle/blob/master/gitops-demo/overlays/minikube.local/microcks-apisource.yaml?
-  - https://microcks.io/documentation/guides/installation/kubernetes-operator/
-
 ## `score-compose`
+
+```mermaid
+sequenceDiagram
+    Command->>+Files: score-compose init
+    Files-->>+Files: microcks-patcher.yaml
+    Files-->>+Files: endpoint-provisioner.yaml
+    Command->>+Files: score-compose generate
+    Files-->>+Files: compose.yaml
+    Command->>+Docker: docker compose up
+```
 
 ```bash
 make compose-up
@@ -35,6 +39,16 @@ curl -X POST 'http://localhost:9090/rest/Order+Service+API/0.1.0/orders' \
 ```
 
 ## `score-k8s`
+
+```mermaid
+sequenceDiagram
+    Command->>+Files: score-k8s init
+    Files-->>+Files: endpoint-provisioner.yaml
+    Command->>+Files: score-k8s generate
+    Files->>+Kubernetes: microcks import
+    Files-->>+Files: manifests.yaml
+    Command->>+Kubernetes: kubectl apply
+```
 
 Create a Kind cluster if you need one:
 ```bash
