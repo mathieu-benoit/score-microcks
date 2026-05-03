@@ -5,18 +5,14 @@ containers:
   frontend:
     image: busybox
     command: ["/bin/sh"]
-    args: ["-c", "while true; do echo Hello $SERVICE_DEP!; sleep 5; done"]
+    args: ["-c", "while true; do echo Hello $BACKEND_SVC!; sleep 5; done"]
     variables:
-      SERVICE_DEP: ${resources.backend.url}/0.1.0/orders
-service:
-  ports:
-    tcp:
-      port: 8080
-      targetPort: 80
+      BACKEND_SVC: ${resources.backend.url}/orders
 resources:
   backend:
-    type: endpoint
+    type: service
     params:
       port: 8181
-      openapi_file: ./resources/backend-openapi.yaml
-      openapi_title: Order Service API
+      artifacts: resources/backend-openapi.yaml:true
+      name: Order Service API
+      version: 0.1.0

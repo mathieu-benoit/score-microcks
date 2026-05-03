@@ -2,6 +2,8 @@
 
 Repo illustrated in this blog post [Unifying Inner & Outer Loops to Bridge the Gaps between Devs & Ops with Containers + Microcks + Score](https://medium.com/@mabenoit/unifying-inner-outer-loops-to-bridge-the-gaps-between-devs-ops-with-containers-microcks-d28603342f4b).
 
+If you want to see a more advanced use case between Score and Microcks, here you are: [Unifying Inner & Outer Loops To Bridge the Gaps Between Devs & Ops With Microcks + Score - Laurent Broudoux, Microcks & Mathieu Benoit, Docker.](https://sched.co/2CVxb).
+
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/mathieu-benoit/score-microcks)
 
 ```mermaid
@@ -17,7 +19,7 @@ flowchart LR
 sequenceDiagram
     Command->>+Files: score-compose init
     Files-->>+Files: microcks-patcher.tpl
-    Files-->>+Files: endpoint-provisioner.yaml
+    Files-->>+Files: service-provisioner.yaml
     Command->>+Files: score-compose generate
     Files-->>+Files: compose.yaml
     Command->>+Docker: docker compose up
@@ -32,7 +34,7 @@ Navigate to the Microcks UI:
 echo -e "http://localhost:9090"
 ```
 
-Test the endpoint registered:
+Test the service URL registered:
 ```bash
 curl -X POST 'http://localhost:9090/rest/Order+Service+API/0.1.0/orders' \
     -H 'Content-Type: application/json' \
@@ -45,7 +47,7 @@ curl -X POST 'http://localhost:9090/rest/Order+Service+API/0.1.0/orders' \
 ```mermaid
 sequenceDiagram
     Command->>+Files: score-k8s init
-    Files-->>+Files: endpoint-provisioner.yaml
+    Files-->>+Files: service-provisioner.yaml
     Command->>+Files: score-k8s generate
     Files->>+Kubernetes: microcks import
     Files-->>+Files: manifests.yaml
